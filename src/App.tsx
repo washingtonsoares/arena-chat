@@ -1,25 +1,27 @@
-import React from 'react';
-import logo from './logo.svg';
-import './App.css';
+import ChatWidget from "./ChatWidget";
+import { ChatContainer, ChatFeedWrapper } from "./styled";
+import { Tab, Tabs, TabList, TabPanel } from "react-tabs";
+import "react-tabs/style/react-tabs.css";
+import Polls from "components/Polls";
 
 function App() {
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.tsx</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+    <ChatContainer>
+      <ChatFeedWrapper>
+        <Tabs>
+          <TabList>
+            <Tab>Chat</Tab>
+            <Tab>Polls</Tab>
+          </TabList>
+          <TabPanel>
+            <ChatWidget />
+          </TabPanel>
+          <TabPanel>
+            <Polls />
+          </TabPanel>
+        </Tabs>
+      </ChatFeedWrapper>
+    </ChatContainer>
   );
 }
 
