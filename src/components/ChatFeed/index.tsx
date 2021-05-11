@@ -1,14 +1,14 @@
-import useArenaChat from 'hooks/useArenaChat';
-import Message from '../Message';
-import { ChatFeedWrapper } from './styled';
+import { useChatContext } from "state/useChatContext";
+import Message from "../Message";
+import { ChatFeedWrapper } from "./styled";
 
 function ChatFeed() {
   const {
     user,
     handleAddReaction,
     handleDeleteReaction,
-    messages
-  } = useArenaChat();
+    messages,
+  } = useChatContext();
 
   return (
     <ChatFeedWrapper>
@@ -26,7 +26,7 @@ function ChatFeed() {
         ) : null;
       })}
     </ChatFeedWrapper>
-  )
+  );
 }
 
 export default ChatFeed;

@@ -2,10 +2,10 @@ import React, { useState } from "react";
 import ChatFeed from "./components/ChatFeed";
 import { Form, InputMessage } from "./styled";
 import Loader from "./components/Loader";
-import useArenaChat from "hooks/useArenaChat";
+import { useChatContext } from "state/useChatContext";
 
 function ChatWidget() {
-  const { isLoadingMessages, activeChannel } = useArenaChat();
+  const { isLoadingMessages, activeChannel } = useChatContext();
 
   const [inputValue, setInputValue] = useState("");
 

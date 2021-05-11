@@ -1,11 +1,26 @@
-import { useCallback, useEffect, useState } from "react";
+import React, { createContext, useCallback, useEffect, useState } from "react";
 import { ExternalUser } from "@arena-im/chat-types";
 import ArenaChat from "@arena-im/chat-sdk";
 import { Channel } from "@arena-im/chat-sdk/dist/channel/channel";
 import { ChatMessage, MessageReaction } from "@arena-im/chat-types";
 import { CHAT_SLUG, DEFAULT_USER, SITE_SLUG } from "../chat-config";
 
-function useArenaChat() {
+type ChatContextValues = {
+  user: ExternalUser | null | undefined;
+  messages: ChatMessage[];
+  isLoadingMessages: boolean;
+  activeChannel: Channel | null;
+  handleAddReaction: (message: ChatMessage) => void;
+  handleDeleteReaction: (message: ChatMessage) => void;
+};
+
+type Props = {
+  children: React.ReactNode;
+};
+
+export const ChatContext = createContext({} as ChatContextValues);
+
+function ChatContextProvider({ children }: Props) {
   const [activeChannel, setActiveChannel] = useState<Channel | null>(null);
   const [messages, setMessages] = useState<ChatMessage[]>([]);
   const [chatInstance, setChatInstance] = useState<ArenaChat>();
@@ -21,6 +36,23 @@ function useArenaChat() {
     setActiveChannel(channel);
   }, []);
 
+  const initListeners = useCallback(async () => {
+    if (activeChannel) {
+      activeChannel?.onMessageReceived((message) => {
+        setMessages((previousMessages) => [...previousMessages, message]);
+      });
+    }
+  }, [activeChannel]);
+
+  const initUser = useCallback(async () => {
+    try {
+      await chatInstance?.setUser(DEFAULT_USER);
+      setUser(chatInstance?.user);
+    } catch (e) {
+      console.log('Unable to initialize user');
+    }
+  }, [chatInstance]);
+
   const loadPreviousMessages = useCallback(async () => {
     setIsLoadingMessages(true);
     try {
@@ -34,25 +66,6 @@ function useArenaChat() {
       setIsLoadingMessages(false);
     }
   }, [activeChannel]);
-
-  const initListeners = useCallback(async () => {
-    if (activeChannel) {
-      loadPreviousMessages();
-
-      activeChannel?.onMessageReceived((message) => {
-        setMessages((previousMessages) => [...previousMessages, message]);
-      });
-    }
-  }, [activeChannel, loadPreviousMessages]);
-
-  const initUser = useCallback(async () => {
-    try {
-      await chatInstance?.setUser(DEFAULT_USER);
-      setUser(chatInstance?.user);
-    } catch (e) {
-      console.log('Unable to initialize user');
-    }
-  }, [chatInstance]);
 
   const handleAddReaction = (message: ChatMessage) => {
     const reactionType = 'love';
@@ -88,14 +101,24 @@ function useArenaChat() {
     initListeners();
   }, [initListeners]);
 
-  return {
-    user,
-    messages,
-    isLoadingMessages,
-    activeChannel,
-    handleAddReaction,
-    handleDeleteReaction
-  }
+  useEffect(() => {
+    if (user && activeChannel) {
+      loadPreviousMessages();
+    }
+  }, [user, activeChannel, loadPreviousMessages]);
+
+  return (
+    <ChatContext.Provider value={{
+      user,
+      messages,
+      isLoadingMessages,
+      activeChannel,
+      handleAddReaction,
+      handleDeleteReaction
+    }}>
+      {children}
+    </ChatContext.Provider>
+  )
 }
 
-export default useArenaChat;
+export default ChatContextProvider;

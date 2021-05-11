@@ -1,23 +1,23 @@
-import { useCallback, useEffect, useState } from 'react';
+import { useCallback, useEffect, useState } from "react";
 import Loader from "../../components/Loader";
-import { Poll, BasePolls } from '@arena-im/chat-types';
-import { Container } from './styled';
-import PollItem from './PollItem';
-import useArenaChat from 'hooks/useArenaChat';
+import { Poll, BasePolls } from "@arena-im/chat-types";
+import { Container } from "./styled";
+import PollItem from "./PollItem";
+import { useChatContext } from "state/useChatContext";
 
 function Polls() {
-  const { activeChannel, user } = useArenaChat();
+  const { activeChannel, user } = useChatContext();
   const [isLoadingPolls, setIsLoadingPolls] = useState(false);
   const [polls, setPolls] = useState<Poll[]>([]);
   const [pollsInstance, setPollsInstance] = useState<BasePolls | undefined>();
-
-  console.log(polls);
 
   const getPolls = useCallback(async () => {
     setIsLoadingPolls(true);
 
     try {
-      const pollsConnection = await activeChannel?.getPollsIntance(user?.id || '');
+      const pollsConnection = await activeChannel?.getPollsIntance(
+        user?.id || ""
+      );
       const loadedPolls = await pollsConnection?.loadPolls();
 
       setPolls(loadedPolls ?? []);
@@ -36,32 +36,22 @@ function Polls() {
 
   const handleVote = async (optionIndex: number, pollId: string) => {
     try {
-      await pollsInstance?.pollVote(
-        pollId,
-        optionIndex
-      );
-    } catch (e) {
-    }
-  }
+      await pollsInstance?.pollVote(pollId, optionIndex);
+    } catch (e) {}
+  };
 
   const renderPolls = () => {
-    return polls.map(poll => (
+    return polls.map((poll) => (
       <PollItem
         key={poll._id}
         poll={poll}
         handleVote={handleVote}
         totalVotes={poll.total}
       />
-    ))
-  }
+    ));
+  };
 
-  return (
-    <Container>
-      {isLoadingPolls ? (
-        <Loader />
-      ) : renderPolls()}
-    </Container>
-  )
+  return <Container>{isLoadingPolls ? <Loader /> : renderPolls()}</Container>;
 }
 
-export default Polls
+export default Polls;
