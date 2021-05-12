@@ -2,21 +2,21 @@
 # yarn lockfile v1
 
 
-"@arena-im/chat-sdk@^2.0.26":
-  version "2.0.26"
-  resolved "https://registry.yarnpkg.com/@arena-im/chat-sdk/-/chat-sdk-2.0.26.tgz#c899f12d8eb97e8bf6fff39b28ab957a1bc13b2f"
-  integrity sha512-rYZPsool64S+V9zViy+gW5kU5Aq8NDd66AUzEZ0FH56LNVX3KDNpaOFuOCaPN54tUO9CEDhZ4awDfwb/1rX1ig==
+"@arena-im/chat-sdk@2.0.15-beta.16":
+  version "2.0.15-beta.16"
+  resolved "https://registry.yarnpkg.com/@arena-im/chat-sdk/-/chat-sdk-2.0.15-beta.16.tgz#c5b89e0e0c38f37548fa48a37bb534dca2453d43"
+  integrity sha512-4rB7UqYv24tG2SUuwvcQqYoyv5PINByLrXKdGzVIrmKO+j3AH6vCM4j2ZQk020QkJzTcJVHEg3WxjuLT7lNLqw==
   dependencies:
-    "@arena-im/chat-types" "^2.0.26"
+    "@arena-im/chat-types" "2.0.15-beta.16"
     firebase "^7.24.0"
     graphql "^15.3.0"
     graphql-request "^3.3.0"
     rollup-plugin-json "^4.0.0"
 
-"@arena-im/chat-types@^2.0.26":
-  version "2.0.26"
-  resolved "https://registry.yarnpkg.com/@arena-im/chat-types/-/chat-types-2.0.26.tgz#f1bbee0c0a7f3af7606a9b97db0995dd125a180f"
-  integrity sha512-9LqVtmGVfpy9LEyx5YKeuqxd8MR0lnx3/K36ZFphHpR9iJR6zlYXBoAGwG21vTtG1eOu3/RjXg/hnpMKr0KNwQ==
+"@arena-im/chat-types@2.0.15-beta.16":
+  version "2.0.15-beta.16"
+  resolved "https://registry.yarnpkg.com/@arena-im/chat-types/-/chat-types-2.0.15-beta.16.tgz#b7f44d621abbf670c7025553b5ae8471411a7ce3"
+  integrity sha512-oELRFPuJRNklxxIWHS2KpIeurM5VKYrfNL1kDp8KOj4rZ4tbDiL8ZvkKiUWMN28mA7ZZOLYgM8exag+gMwo++Q==
 
 "@babel/code-frame@7.10.4":
   version "7.10.4"
@@ -4385,6 +4385,11 @@ data-urls@^2.0.0:
     abab "^2.0.3"
     whatwg-mimetype "^2.3.0"
     whatwg-url "^8.0.0"
+
+dayjs@^1.10.4:
+  version "1.10.4"
+  resolved "https://registry.yarnpkg.com/dayjs/-/dayjs-1.10.4.tgz#8e544a9b8683f61783f570980a8a80eaf54ab1e2"
+  integrity sha512-RI/Hh4kqRc1UKLOAf/T5zdMMX5DQIlDxwUe3wSyMMnEbGunnpENCdbUgM+dW7kXidZqCttBrmw7BhN4TMddkCw==
 
 debug@2.6.9, debug@^2.2.0, debug@^2.3.3, debug@^2.6.0, debug@^2.6.9:
   version "2.6.9"

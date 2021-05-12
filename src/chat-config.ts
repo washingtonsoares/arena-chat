@@ -1,6 +1,6 @@
-export const SITE_SLUG = 'apollo';
+export const SITE_SLUG = 'washington-dev';
 
-export const CHAT_SLUG = 'igyl';
+export const CHAT_SLUG = '5uli';
 
 export const DEFAULT_USER = {
   id: "user-id",

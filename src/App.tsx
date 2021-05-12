@@ -4,6 +4,7 @@ import { Tab, Tabs, TabList, TabPanel } from "react-tabs";
 import "react-tabs/style/react-tabs.css";
 import Polls from "components/Polls";
 import ChatContextProvider from "state/ChatContext";
+import QnA from "components/QnA";
 
 function App() {
   return (
@@ -14,12 +15,16 @@ function App() {
             <TabList>
               <Tab>Chat</Tab>
               <Tab>Polls</Tab>
+              <Tab>Q&A</Tab>
             </TabList>
             <TabPanel>
               <ChatWidget />
             </TabPanel>
             <TabPanel>
               <Polls />
+            </TabPanel>
+            <TabPanel>
+              <QnA />
             </TabPanel>
           </Tabs>
         </ChatFeedWrapper>

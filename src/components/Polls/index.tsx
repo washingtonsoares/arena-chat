@@ -8,8 +8,8 @@ import { useChatContext } from "state/useChatContext";
 function Polls() {
   const { activeChannel, user } = useChatContext();
   const [isLoadingPolls, setIsLoadingPolls] = useState(false);
-  const [polls, setPolls] = useState<Poll[]>([]);
   const [pollsInstance, setPollsInstance] = useState<BasePolls | undefined>();
+  const [polls, setPolls] = useState<Poll[]>([]);
 
   const getPolls = useCallback(async () => {
     setIsLoadingPolls(true);
@@ -33,6 +33,20 @@ function Polls() {
   useEffect(() => {
     getPolls();
   }, [getPolls]);
+
+  useEffect(() => {
+    if (pollsInstance) {
+      pollsInstance.onPollModified((receivedPoll: Poll) => {
+        const updatedPolls = polls?.map(poll => {
+          if (poll._id === receivedPoll._id) {
+            return receivedPoll;
+          }
+          return poll;
+        });
+        setPolls(updatedPolls ?? []);
+      })
+    }
+  }, [pollsInstance, polls]);
 
   const handleVote = async (optionIndex: number, pollId: string) => {
     try {
